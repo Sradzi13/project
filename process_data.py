@@ -4,6 +4,7 @@ import cv2
 import argparse
 import os
 import time
+import re
 
 def parse_args():
     parser = argparse.ArgumentParser()
@@ -42,7 +43,8 @@ def labelImages(img_folder_path):
         file.write('img_name,attractionRating\n')
     for path,subdirs,files in os.walk(img_folder_path):
         for s in subdirs:
-            if s.startswith('AM'):
+            if re.match(r'\wM',s):
+                print s
                 img_path = os.path.join(path,s)
                 list = os.listdir(os.path.join(path,s))
                 if '.DS_Store' in list:
@@ -53,7 +55,7 @@ def labelImages(img_folder_path):
                     count += 1
                     collectData(img_path,file_path)
 
-    return file
+return file
 
 if __name__ == '__main__':
     img_folder_path = parse_args()
